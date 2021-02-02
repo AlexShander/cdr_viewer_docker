@@ -9,10 +9,10 @@ services:
       - ASTERISK_HOST=${ASTERISK_HOST}
       - ASTERISK_PASS=${ASTERISK_PASS}
       - ASTERISK_CDR_TABLE=${ASTERISK_CDR_TABLE}
-      - COLUMN_NAME='recordingfile'
-      - MONINTOR_DIR='/recorndings/'
+      - COLUMN_NAME=recordingfile
+      - MONINTOR_DIR=/recordings/
       - STORAGE_FORMAT=5
-      - ADMIN='admin'
+      - ADMIN=admin
       - ADMIN_PASS=${ADMIN_PASS}
     entrypoint: ["entrypoint_cdr_viewer.sh"]
     volumes:
@@ -20,7 +20,7 @@ services:
       - ./www.conf:/usr/local/etc/php-fpm.d/www.conf
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - /var/spool/asterisk/monitor:/recorndings:ro
+      - /var/spool/asterisk/monitor:/recordings:ro
     restart: always
 
   nginx:

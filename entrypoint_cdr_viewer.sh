@@ -1,5 +1,5 @@
 #!/bin/sh
-set -x
+set -e
 
 CONF_FILE_NAME='/var/www/html/inc/config/config.php'
 
@@ -10,9 +10,9 @@ DEF_ASTERISK_USER=asterisk
 DEF_ASTERISK_PASS=password
 DEF_ASTERISK_CDR_TABLE=cdr_viewer
 DEF_COLUMN_NAME=recordingfile
-DEF_MONINTOR_DIR='\/recorndings\/'
+DEF_MONINTOR_DIR=/recordings/
 DEF_STORAGE_FORMAT=5
-DEF_ADMIN="\'admin\'"
+DEF_ADMIN=admin
 # Default values for php.ini
 DEF_TIMEZONE='Asia/Almaty'
 
@@ -37,13 +37,17 @@ if [[ -z "$COLUMN_NAME" ]]; then
   COLUMN_NAME=$DEF_COLUMN_NAME
 fi
 if [[ -z "$MONINTOR_DIR" ]]; then
-  MONINTOR_DIR=$DEF_MONINTOR_DIR
+  MONINTOR_DIR=$(echo $DEF_MONINTOR_DIR | sed 's/\//\\\//g')
+else
+  MONINTOR_DIR=$(echo $MONINTOR_DIR | sed 's/\//\\\//g')
 fi
 if [[ -z "$STORAGE_FORMAT" ]]; then
   STORAGE_FORMAT=$DEF_STORAGE_FORMAT
 fi
 if [[ -z "$ADMIN" ]]; then
-  ADMIN=$DEF_ADMIN
+  ADMIN=$( echo $DEF_ADMIN | sed "s/$/\\\'/" |sed "s/^/\\\'/")
+else
+  ADMIN=$( echo $ADMIN | sed "s/,/\\\'\,\\\'/g"| sed "s/$/\\\'/" |sed "s/^/\\\'/")
 fi
 if [[ -z "$TIMEZONE" ]]; then
   TIMEZONE=$DEF_TIMEZONE
