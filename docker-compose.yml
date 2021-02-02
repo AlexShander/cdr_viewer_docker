@@ -1,0 +1,49 @@
+version: '3'
+services:
+  php-fpm:
+    image: alexshander/php:5.6-fpm-alpine-mysql-pdo
+    container_name: php-fpm
+    command: ["-R"]
+    environment:
+      - ASTERISK_DB=${ASTERISK_DB}
+      - ASTERISK_HOST=${ASTERISK_HOST}
+      - ASTERISK_PASS=${ASTERISK_PASS}
+      - ASTERISK_CDR_TABLE=${ASTERISK_CDR_TABLE}
+      - COLUMN_NAME='recordingfile'
+      - MONINTOR_DIR='/recorndings/'
+      - STORAGE_FORMAT=5
+      - ADMIN='admin'
+      - ADMIN_PASS=${ADMIN_PASS}
+    entrypoint: ["entrypoint_cdr_viewer.sh"]
+    volumes:
+      - ./Asterisk-CDR-Viewer-Mod:/var/www/html
+      - ./www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/spool/asterisk/monitor:/recorndings:ro
+    restart: always
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - 9191:80
+    volumes:
+      - ./Asterisk-CDR-Viewer-Mod:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - secret_nginx:/secret_nginx
+    restart: always
+
+  passwd:
+    image: registry:2.7.0
+    container_name: passwd
+    entrypoint: ["htpasswd", "-Bbc", "/secret_nginx/nginx.passwd", "admin", "87052269316"]
+    volumes:
+      - secret_nginx:/secret_nginx
+    restart: "no"
+
+
+volumes:
+  secret_nginx: 
