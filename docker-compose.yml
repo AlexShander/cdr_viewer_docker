@@ -7,6 +7,7 @@ services:
     environment:
       - ASTERISK_DB=${ASTERISK_DB}
       - ASTERISK_HOST=${ASTERISK_HOST}
+      - ASTERISK_USER=${ASTERISK_USER}
       - ASTERISK_PASS=${ASTERISK_PASS}
       - ASTERISK_CDR_TABLE=${ASTERISK_CDR_TABLE}
       - COLUMN_NAME=recordingfile
