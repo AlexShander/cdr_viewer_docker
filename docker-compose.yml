@@ -15,6 +15,8 @@ services:
       - ADMIN=admin
       - ADMIN_PASS=${ADMIN_PASS}
     entrypoint: ["entrypoint_cdr_viewer.sh"]
+    extre_hosts:
+      local_host: 10.254.254.254
     volumes:
       - ./Asterisk-CDR-Viewer-Mod:/var/www/html
       - ./www.conf:/usr/local/etc/php-fpm.d/www.conf
@@ -28,6 +30,8 @@ services:
     container_name: nginx
     depends_on:
       - php-fpm
+    extre_hosts:
+      local_host: 10.254.254.254
     ports:
       - 9191:80
     volumes:
