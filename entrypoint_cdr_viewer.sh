@@ -64,7 +64,7 @@ sed -i -E "s/([[:space:]]+)('storage_format')([[:space:]]+=>[[:space:]]+')(.*)('
 sed -i -E "s/([[:space:]]+)('column_name')([[:space:]]+=>[[:space:]]+')(.*)(',.*$)/\1\2\3$COLUMN_NAME\5/g" $CONF_FILE_NAME
 sed -i -E "s/([[:space:]]+)('admins')([[:space:]]+=>[[:space:]]+array\()(.*$)/\1\2\3$ADMIN\4/g" $CONF_FILE_NAME
 
-echo "[Date]" >> /usr/local/etc/php/conf.d/php.ini \
+echo "[Date]" >> /usr/local/etc/php/conf.d/php.ini 
 echo "date.timezone = $TIMEZONE" >> /usr/local/etc/php/conf.d/php.ini
 
 
