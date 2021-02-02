@@ -34,17 +34,20 @@ services:
       - ./Asterisk-CDR-Viewer-Mod:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - secret_nginx:/secret_nginx
-      - /var/spool/asterisk/monitor:/recorndings:ro
+      - /var/spool/asterisk/monitor:/recordings:ro
     restart: always
 
   passwd:
     image: registry:2.7.0
     container_name: passwd
-    entrypoint: ["htpasswd", "-Bbc", "/secret_nginx/nginx.passwd", "admin", "87052269316"]
+    environment:
+      - ADMIN=admin
+      - ADMIN_PASS=87052269316
+    entrypoint: ["entrypoint_create_httpd_pass.sh"]
     volumes:
+      - ./entrypoint_create_httpd_pass.sh:/usr/local/bin/entrypoint_create_httpd_pass.sh
       - secret_nginx:/secret_nginx
     restart: "no"
-
 
 volumes:
   secret_nginx: 
