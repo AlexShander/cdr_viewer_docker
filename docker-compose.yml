@@ -13,7 +13,6 @@ services:
       - MONINTOR_DIR=/recordings/
       - STORAGE_FORMAT=5
       - ADMIN=admin
-      - ADMIN_PASS=${ADMIN_PASS}
     entrypoint: ["entrypoint_cdr_viewer.sh"]
     extra_hosts:
       local_host: 10.254.254.254
@@ -46,7 +45,7 @@ services:
     container_name: passwd
     environment:
       - ADMIN=admin
-      - ADMIN_PASS=87052269316
+      - ADMIN_PASS=${ADMIN_PASS}
     entrypoint: ["entrypoint_create_httpd_pass.sh"]
     volumes:
       - ./entrypoint_create_httpd_pass.sh:/usr/local/bin/entrypoint_create_httpd_pass.sh
