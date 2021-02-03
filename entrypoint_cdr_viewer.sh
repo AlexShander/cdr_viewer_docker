@@ -10,7 +10,7 @@ DEF_ASTERISK_USER=asterisk
 DEF_ASTERISK_PASS=password
 DEF_ASTERISK_CDR_TABLE=cdr_viewer
 DEF_COLUMN_NAME=recordingfile
-DEF_MONINTOR_DIR=/recordings/
+DEF_MONINTOR_DIR=/var/spool/asterisk/monitor
 DEF_STORAGE_FORMAT=5
 DEF_ADMIN=admin
 # Default values for php.ini
